@@ -1,1 +1,473 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+    Donation Form
+  </title>
 
+  <!-- jquery-3 -->
+  <script src="https://code.jquery.com/jquery-3.1.0.slim.min.js" integrity="sha256-cRpWjoSOw5KcyIOaZNo4i6fZ9tKPhYYb6i5T9RSVJG8=" crossorigin="anonymous"></script>
+
+
+  <script src="https://www.atlasestateagents.co.uk/javascript/tether.min.js"></script><!-- Tether for Bootstrap -->
+
+  <!-- bootstrap -->
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <!-- <script src="http://localhost:35729/livereload.js"></script> -->
+  <link rel="stylesheet" href="main.css">
+
+
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div id="progress-bar" class="prog">
+      <div class="bar active"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+
+    <div class="donation-container">
+
+      <form id="donation-form" action="index.html" method="post">
+
+        <!-- select amount -->
+        <fieldset>
+          <div class="title">
+            Donate to ReBuildUSAtodayHPAC
+          </div>
+
+          <div class="buttons">
+            <!-- inline-blocks can't have space between divs -->
+
+
+            <div class="btn btn-number">10</div><div class="btn btn-number">20</div><div class="btn btn-number">50</div><div class="btn btn-number">100</div><div class="btn btn-number">200</div><div class="btn btn-number">300</div><div class="btn btn-number">500</div><input type="text" class="set-amount" placeholder="Other Amount"></input>
+
+          </div>
+
+          <div class="next-container">
+            <button type="button" class="btn btn-next">Next</button>
+          </div>
+
+        </fieldset>
+
+        <!-- personal details -->
+        <fieldset>
+          <div class="form-group">
+            <label for="">First Name *</label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="">Last Name *</label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="">Address *</label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="">City *</label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="row">
+            <div class="border col-xs-6">
+              <div class="form-group">
+                <label for="">State *</label>
+                  <select class="form-control" id="exampleSelect1">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </select>
+              </div>
+            </div>
+            <div class="border col-xs-6">
+              <div class="form-group">
+                <label for="">Post Code *</label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address *</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Phone *</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          </div>
+          <div class="next-container">
+            <button type="button" class="btn btn-next">Next</button>
+          </div>
+        </fieldset>
+
+        <!-- card details -->
+        <fieldset>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Card Number *</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          </div>
+          <div class="row">
+            <div class="border col-xs-6">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Expiration *</label>
+                <select class="form-control" id="exampleSelect1">
+                  <option value="" selected disabled>Month</option>
+                  <option>January</option>
+                  <option>February</option>
+                  <option>March</option>
+                  <option>April</option>
+                  <option>May</option>
+                  <option>June</option>
+                  <option>July</option>
+                  <option>August</option>
+                  <option>September</option>
+                  <option>October</option>
+                  <option>November</option>
+                  <option>December</option>
+                </select>
+              </div>
+            </div>
+            <div class="border col-xs-6">
+              <div class="form-group">
+                <label for="exampleInputEmail1" style="color:white">Expiration *</label>
+                <select class="form-control" id="exampleSelect1">
+                  <option value="" selected disabled>Year</option>
+                  <option>2017</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="">CVV *</label>
+            <input type="text" class="form-control">
+          </div>
+
+          <div class="next-container">
+            <button type="button" class="btn btn-submit">Donate</button>
+          </div>
+        </fieldset>
+
+      </form>
+    </div>
+  </div>
+
+
+</body>
+<!-- main functionality -->
+<script>
+  var current_fs, next_fs,self
+  $(".btn.btn-next").click(function(){
+    current_fs = $(this).parent().parent();
+    next_fs = $(this).parent().parent().next();
+    current_fs.hide();
+    next_fs.fadeIn();
+    $("#progress-bar > div").eq(next_fs.index()).addClass("active");
+  });
+  $("body").on("click", ".bar.active", function(){
+    if ($(this).index() != $("fieldset:visible").index()){
+      $("fieldset:visible").hide();
+      $("fieldset").eq($(this).index()).fadeIn();
+    };
+  });
+  $(".btn.btn-number").on("click", function(){
+    $(this).parent().children().removeClass("selected");
+    $(this).addClass("selected");
+    $(this).parent().parent().find(".btn.btn-next").click();
+  });
+  $(".set-amount").on("click", function(){
+    $(this).parent().children().removeClass("selected");
+  });
+</script>
+</html>
+<div style="background-color:grey;color:white;padding:60px;">
+    <h2>Contribute to ReBuildUSAtodayHPAC</h2>
+  
+  <p>Right now our country is descending into a gerontocracy - a fashionable trend, that tend to ignore the rule of law, technology,
+    infrastructure, climate change, millennials, the general public and the new American energy. Good news is, our donors are ready to face up to this challenge.</p>
+  <p>This platform, has been designed to help make the voices of donors like you heard far and wide.  And we are not just spearheading a campaign 
+    to ReBuildUSatoday, we are providing a platform that campaign organizations (county or congressional) could lean on - for support.  Mobilize to ReBuildUSAtoday! And we'll 
+    be there with you, all the way!</p>
+	
+    <h2>We require a donor to be:</h2>
+  
+  <li>A U.S. citizen or lawfully admitted permanent residenct (i.e. green card holder).</li>
+  <li>A contribution made from own funds and funds are not being provided to the donor by another person or entity for the piurpose of making this contribution.</li>
+  <li>At least eighteen years old and not a minor.</li>
+  <li>That your contribution is not made from the general treasury funds of a corporation, labor organization or a national bank.</li>
+  <li>That your contribution is not made from the treasury of an entity or person who is a federal contractor.</li>
+  <li>That your contribution is not made from the funds of an individual registered as a federal lobbyist or a foreign agent, or an entity that is a federaly registered
+      lobbying fiorm or a foreign agent.</li>
+  <li>That the fund(s) you are donating are not being provided to you by another person or entity for the purpose of making this contribution.</li>
+  <li>That this contribution is not made from the funds of a political action committee.</li></p>
+  
+  <p>As we go through this journey, our dedicated team will be working hard to bring you the next generation of fundraising and donation tools - so millennials and builders willing 
+    to ReBuildUSAtoday would have all they need to make their voices heard.</p>
+  
+  <p><h4>Please do feel free to chip in $10 a month to support our work at ReBuildUSAtodayHPAC.</h4></p>
+
+<!-- Social Button HTML -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+					
+					<!-- Twitter -->
+	<a href="http://twitter.com/share?url=https://laurel-smith.github.io/DonateToReBuildUSAtoday&text=We can only make America great again if we ReBuildUSAtoday! I'm signed up to RebuildUSAtoday! What about you?&via=rebuildusatoday" target="_blank" class="btn share-btn twitter">
+            <i class="fa fa-twitter"></i>
+        </a>
+     	  				<!-- Google Plus -->
+        <a href="https://plus.google.com/share?url=https://laurel-smith.github.io/DonateToReBuildUSAtoday" target="_blank" class="btn share-btn google-plus">
+            <i class="fa fa-google-plus"></i>
+        </a>
+        				<!-- Facebook -->
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://laurel-smith.github.io/DonateToReBuildUSAtoday" target="_blank" class="btn share-btn facebook">
+            <i class="fa fa-facebook"></i>
+        </a>			
+					<!-- LinkedIn -->
+        <a href="http://www.linkedin.com/shareArticle?url=https://laurel-smith.github.io/DonateToReBuildUSAtoday&title=DonateToReBuildUSatoday&summary=Right now our country is descending into a gerontocracy, and our donors are ready to face up to this latest trend - that tends to ignore the rule of law, technology,
+    infrastructure, climate change, millennials, the general public and the new American energy...&source=<SOURCE_URL>" target="_blank" class="btn share-btn linkedin">
+            <i class="fa fa-linkedin"></i>
+        </a>
+        				<!-- Email -->
+        <a href="mailto:?subject=<ReBuildUSAtodayHPAC&body=We can only make America great again if we ReBuildUSAtoday! I'm donating to ReBuildUSAtoday! What about you? https://laurel-smith.github.io/DonateToReBuildUSAtoday" target="_blank" class="btn share-btn email">
+            <i class="fa fa-envelope"></i>
+        </a>
+</p>
+
+<p style="border:3px; border-style:solid; border-color:#58D68D; padding: 1em;">This site, "Put me in CHARGE! And watch me ReBuildUSAtoday!" was paid for by ReBuildUSAtodayHPAC 2017. Copyright: La Alianza De Peregrinos de los Estados Unidos 2014.</p>
+
+</div>    
+    
+<div style="background-color:black;color:white;padding:60px;">
+  <h2>OUR ONLINE POLICY AGREEMENT</h2>
+   
+<p>ReBuildUSAtodayHPAC is committed to keeping any and all personal information collected of those individuals that visit our website and make use of our online facilities 
+  and services accurate, confidential, secure and private. Our privacy policy has been designed and created to ensure those affiliated with ReBuildUSAtodayHPAC, of our 
+  commitment and realization of our obligation not only to meet but to exceed most existing privacy standards.</p>
+
+<p>THEREFORE, this Privacy Policy Agreement shall apply to ReBuildUSAtodayHPAC and all affiliated or subsidiary websites, apps and platforms, and thus it shall govern any 
+  and all data collection and usage thereof. Through the use of this site or any of our sites, you are herein consenting to the following data procedures expressed within
+  this agreement.</p>
+
+  <h2>Collection of Information</h2>
+
+  <p>This website collects various types of information, such as:</p>
+
+<li>Voluntarily provided information which may include your name, address, email address, billing and/or credit card information etc., which may be used when you make a 
+  donation or purchase investment products and/or services and to deliver the services you have requested.</li>
+
+<li>Information automatically collected when visiting our website, which may include cookies, third party tracking technologies and server logs.</li>
+
+<p>Please rest assured that this site shall only collect personal information that you knowingly and willingly provide by way of surveys, completed membership forms, and 
+  emails. It is the intent of this site to use personal information only for the purpose for which it was requested and any additional uses specifically provided on this site.</p>
+
+<p>ReBuildUSAtodayHPAC may have the occasion to collect anonymous demographic information, such as age, gender, household income, political affiliation, race and religion 
+  at a later time. We may also gather information about the type of browser you are using, IP address or type of operating system to assist us in providing and maintaining 
+  superior quality service.</p>
+
+<p>It is highly recommended and suggested that you review the privacy policies and statements of any website you choose to use or frequent as a means to better understand 
+  the way i which other websites garner, make use of and share information collected.</p>
+
+  <h2>Use of Information Collected</h2>
+
+<p>ReBuildUSAtodayHPAC may collect and may make use of personal information to assist in the operation of our website and to ensure delivery of the services you need and 
+  request. At times, we may find it necessary to use personally identifiable information as a means to keep you informed of other possible products and/or services that may 
+  be aailable to you from http://rebuildusa.today ReBuildUSAtodayHPAC may also be in contact with you with regards to completing surveys and/or research questionnaires related 
+  to your opinion of current or potential future services that may be offered.</p>
+
+<p>ReBuildUSAtodayHPAC may feel it necessary, from time to time, to make contact with you on behalf of other external business partners with regards to a potential new offer 
+  which may be of interest to you. If you consent or show interest in presented offers, then, at that time, specific identifiable information, such as name, email address and/or 
+  telephone number, may be shared with the third party.</p>
+
+<p>ReBuildUSAtoday may find it beneficial to share specific data with our trusted partners in an effort to conduct statistical analysis, provide you with email and/or postal mail, 
+  deliver support and/or arrange for deliveries to be made. Those third parties shall be strictly prohibited from making use of your personal information, other than to deliver 
+  those services which you requested, and as such they are thus required, in accordance with this agreement, to maintain the strictest of confidentiality with regards to all your 
+  information.</p>
+
+<p>ReBuildUSAtodayHPAC may deem it necessary to follow websites and/or pages that our users may frequent in an effort to gleam what types of services and/or products may be the most 
+  popular to customers or the general public.</p>
+
+<p>ReBuildUSAtodayHPAC may disclose your personal information, without prior notice to you, only if required to do so in accordance with applicable laws and/or in a good faith belief 
+  that such action is deemed necessary or is required in an effort to:</p>
+
+<li>Remain in conformance with any decrees, laws and/or statutes or in an effort to comply with any process which may be served upon ReBuildUSAtodayHPAC and/or our website;</li>
+<li>Maintain, safeguard and/or preserve all the rights and/or property of ReBuildUSAtodayHPAC and</li>
+<li>Perform under demanding conditions in an effort to safeguard the personal safety of users of http://rebuildusa.today and/or the general public.</li>
+
+  <h2>Children Under Age of 13</h2>
+
+<p>ReBuildUSAtodayHPAC does not knowingly collect personal identifiable information from children under the age of thirteen (13) without verifiable parental consent. If it is determined 
+  that such information has been inadvertently collected on anyone under the age of thirteen (13), we shall immediately take the necessary steps to ensure that such information is 
+  deleted from our system’s database. Anyone under the age of thirteen (13) must seek and obtain parent or guardian permission to use this website.</p>
+
+  <h2>Your California privacy rights</h2>
+
+<p>California Law California Civil Code Section 1798.83, also known as "Shine The Light" law, permits California residents to annually request - free of charge, information about personal
+  information (if any) disclosed to third parties for direct marketing purposes in the preceding calendar year. If apllicable, this information would include a list of the categories of 
+  personal information that was shared, plus names and addresses of all third parties with which we shared information in the immediately preceding calendar year. If you are a California
+  resident and would like to make such a request, please submit your request in writing to:</p>
+
+  <p><addrress>Legal Department</br>
+Attn: Shine The Light "California Law" disclosure</br>
+ReBuildUSAtodayHPAC</br>
+781 Prospect Place</br>
+Brooklyn, New York city</br>
+NY 11216</address></p>
+
+  <h2>Unsubscribe or Opt-Out</h2>
+
+<p>All users and/or visitors to our website have the option to discontinue receiving communication from us and/or reserve the right to discontinue receiving communications by way of email 
+  or newsletters. To discontinue or unsubscribe to our website please send an email that you wish to unsubscribe to smithie@rebuildusa.today. If you wish to unsubscribe or opt-out from any 
+  third party websites, you must go to that specific website to unsubscribe and/or opt-out.</p>
+  
+  <h2>Our Return Policy</h2>
+  
+ <p>At ReBuildUSAtodayHPAC, it is our tradition to always do our best to accommodate requests for refunds.  We honor requsets such as:</p> 
+  
+<li>input error.</li>
+<li>when a contributor accidentally donates twice.</li>
+<li>when a contributor enters the wrong donation amount.</li></p>
+
+<p>ReBiuildUSAtodayHPAC reserves the right to refuse a refund, and will only refuse to do so for reasons such as:</p>
+
+<li>a change in personal opinion.</li>
+<li>a change of political affiliation.</li>
+<li>the cancellation of an event.</li></p>
+
+<p>Also note, requests for refund are subject to availability of contributuion funds.  Because ReBuildUSAtodayHPAC forwards contributions to the candidate, the cause or the committee to whom
+  you choose to contribiute to. ReBuildUSAtodayHPAC will only honor a request to refund a contribution if we still have the funds or are able to recover the fund from the recepient. For this 
+  reason, we seriously advise that the donor make a request immediately after the contribution or as soon as possible after making the donation.</p>
+
+<p>All refunds issued by ReBuildUSAtodayHPAC will  be credited back to the card that was used to make the contribution. In cases wgere we are not able to accommodate a request fund, we will be
+  very happy to refer you to the recepient of your contribution - so you may request a refund directly from them.</p>
+
+<p>To those who intend to use stolen cards, our fraud detection software constantly monitors the site for fraudulent cards and other deceptive activities. We are quick to automatically cancel or
+  issue a refund - regardless of a refund request, if and when our software identifies a suspicious activity on oiur site.</p>
+
+<p>If you are with a campign, committee, or with an organization that has received a contribution through ReBuildUSAtodayHPAC and would like to request that we refund that contribution, please 
+  contact us at smithie@rebuildusa.today and we will do our best to assist you.</p>
+
+  <h2>Re-designation of Contribution</h2>
+
+<p>In the event that a campaign committee (a) fails for 60 days to cash a check from ReBuildUSatodayHPAC - which includes your contribution, after ReBuildUSAtodayHPAC makes repeated attempts to 
+  work with the campaign to ensure all checks are cashed, or (b) affirmatively  refuses a contribution earmarked through ReBuildUSAtodayHPAC, your contribution will be re-designated as a 
+  contribution to ReBuildUSAtodayHPAC. Contributions to social welfare organizations which are similarly not cashed or affirmatively refused will be kept by ReBuildUSAtodayHPAC and used generally 
+  to support its social welfare activities. Contributions to charitable organizations which are not cashed or affirmatively refused will go to ReBuildUSAtodayHPAC.</p>
+
+  <h2>Security</h2>
+
+<p>ReBuildUSAtodayHPAC shall endeavor and shall take every precaution to maintain adequate physical, procedural and technical security with respect to our offices and information storage 
+  facilities so as to prevent any loss, misuse, unauthorized access, disclosure or modification of the user’s personal information under our control.</p>
+
+  <h2>Changes to Privacy Policy Agreement</h2>
+
+<p>ReBuildUSAtodayHPAC reserves the right to update and/or change the terms of our privacy policy, and as such we will post those change to our website homepage at http://rebuildusa.today, 
+  so that our users and/or visitors are always aware of the type of information we collect, how it will be used, and under what circumstances, if any, we may disclose such information. 
+  If at any point in time ReBuildUSAtodayHPAC decides to make use of any personally identifiable information on file, in a manner vastly different from that which was stated when this 
+  information was initially collected, the user or users shall be promptly notified by email. Users at that time shall have the option as to whether or not to permit the use of their 
+  information in this separate manner.</p>
+
+  <h2>Acceptance of Terms</h2>
+
+<p>Through the use of this website, you are hereby accepting the terms and conditions stipulated within the aforementioned Privacy Policy Agreement. If you are not in agreement with our terms 
+  and conditions, then you should refrain from further use of our sites. In addition, your continued use of our website following the posting of any updates or changes to our terms and conditions 
+  shall mean that you are in agreement and acceptance of such changes.</p>
+
+  <h2>How to Contact Us</h2>
+
+<p>If you have any questions or concerns regarding the Privacy Policy Agreement related to our website, please feel free to contact us at smithie@rebuildusa.today</p>
+
+<p>You can also reach us via U.S. mail or telephone at:</p>
+
+<p><address>ReBuildUSAtodayHPAC</br>
+781 Prospect Place</br>
+Brooklyn, New York city</br>
+NY 11216</br>
+Phone: 646.480.2217</address></p>
+
+  <p>Last Modified and effective from December 15, 2014" We will develop policies, update and post changes on this site as we grow into our campaign.</p>
+
+<!-- Social Button HTML -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+					
+					<!-- Twitter -->
+	<a href="http://twitter.com/share?url=https://laurel-smith.github.io/DonateToReBuildUSAtoday&text=We can only make America great again if we ReBuildUSAtoday! I'm signed up to RebuildUSAtoday! What about you?&via=rebuildusatoday" target="_blank" class="btn share-btn twitter">
+            <i class="fa fa-twitter"></i>
+        </a>
+     	  				<!-- Google Plus -->
+        <a href="https://plus.google.com/share?url=https://laurel-smith.github.io/DonateToReBuildUSAtoday" target="_blank" class="btn share-btn google-plus">
+            <i class="fa fa-google-plus"></i>
+        </a>
+        				<!-- Facebook -->
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://laurel-smith.github.io/DonateToReBuildUSAtoday" target="_blank" class="btn share-btn facebook">
+            <i class="fa fa-facebook"></i>
+        </a>			
+					<!-- LinkedIn -->
+        <a href="http://www.linkedin.com/shareArticle?url=https://laurel-smith.github.io/DonateToReBuildUSAtoday&title=DonateToReBuildUSatoday&summary=Right now our country is descending into a gerontocracy, and our donors are ready to face up to this latest trend - that tends to ignore the rule of law, technology,
+    infrastructure, climate change, millennials, the general public and the new American energy...&source=<SOURCE_URL>" target="_blank" class="btn share-btn linkedin">
+            <i class="fa fa-linkedin"></i>
+        </a>
+        				<!-- Email -->
+        <a href="mailto:?subject=<ReBuildUSAtodayHPAC&body=We can only make America great again if we ReBuildUSAtoday! I'm donating to ReBuildUSAtoday! What about you? https://laurel-smith.github.io/DonateToReBuildUSAtoday" target="_blank" class="btn share-btn email">
+            <i class="fa fa-envelope"></i>
+        </a>
+</p>
+
+<p style="border:3px; border-style:solid; border-color:#58D68D; padding: 1em;">This site, "Put me in CHARGE! And watch me ReBuildUSAtoday!" was paid for by ReBuildUSAtodayHPAC 2017. Copyright: La Alianza De Peregrinos de los Estados Unidos 2014.</p>
+
+</div>    
+
+<div style="background-color:grey;color:white;padding:60px;">
+	<h2>Recurring payment policy</h2>
+
+<p>I understand State and Federal laws requires that a contribution be in my name and be from my own funds. I hereby affirm that this contribution is being made from my personal credit card account, billed to and paid by me for my personal use, and having no corporate or business affiliation: and is not being made as a loan.</p>
+
+	<h2>Automatic recurring billing agreement</h2>
+<p>Please read this Agreement carefully and have it available for reference should you need it in the nearest future.</p>
+
+	<h2>Changing automatic recurring payment</h2>
+<p>If you would like to change your Automatic Recurring Payment including, for example, making a change from one credit or debit card that was initially selected to another credit or debit card or bank account, you must authorize the recurring payment with the new credit or debit card or bank account by emailing a request to smithie@rebuildusa.today asking for your previously approved Automatic Recurring Payment to be terminated within 24 hours.</p>
+
+	<h2>Electronic authorization</h2>
+<p>This Agreement is not transferable and must be agreed to by the person authorized on the ReBuildUSAtoday-HPAC account.</p>
+
+	<h2>Agreeing to these conditions</h2>
+<p>By providing my credit, or debit card or bank account information ("Payment Method"), I AGREE that I have read and understand this Automatic Recurring Payment Agreement. In addition, I authorize ReBuildUSAtoday-HPAC to charge the full amount required by my rate plan (once every month or more frequently as described) to the specified Payment Method; and I authorize the financial institution for the Payment Method, specified above to charge or debit my account and remit payment for my donation to ReBuildUSAtoday-HPAC. This authority will remain in effect until I give notification, as required under this Agreement, to terminate this authorization.</p>
+<p>Please refer questions or concerns to ReBuildUSAtoday-HPAC at smithie@rebuildusa.today</p></li>
+
+<!-- Social Button HTML -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+					
+					<!-- Twitter -->
+	<a href="http://twitter.com/share?url=https://laurel-smith.github.io/DonateToReBuildUSAtoday&text=We can only make America great again if we ReBuildUSAtoday! I'm signed up to RebuildUSAtoday! What about you?&via=rebuildusatoday" target="_blank" class="btn share-btn twitter">
+            <i class="fa fa-twitter"></i>
+        </a>
+     	  				<!-- Google Plus -->
+        <a href="https://plus.google.com/share?url=https://laurel-smith.github.io/DonateToReBuildUSAtoday" target="_blank" class="btn share-btn google-plus">
+            <i class="fa fa-google-plus"></i>
+        </a>
+        				<!-- Facebook -->
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://laurel-smith.github.io/DonateToReBuildUSAtoday" target="_blank" class="btn share-btn facebook">
+            <i class="fa fa-facebook"></i>
+        </a>			
+					<!-- LinkedIn -->
+        <a href="http://www.linkedin.com/shareArticle?url=https://laurel-smith.github.io/DonateToReBuildUSAtoday&title=DonateToReBuildUSatoday&summary=Right now our country is descending into a gerontocracy, and our donors are ready to face up to this latest trend - that tends to ignore the rule of law, technology,
+    infrastructure, climate change, millennials, the general public and the new American energy...&source=<SOURCE_URL>" target="_blank" class="btn share-btn linkedin">
+            <i class="fa fa-linkedin"></i>
+        </a>
+        				<!-- Email -->
+        <a href="mailto:?subject=<ReBuildUSAtodayHPAC&body=We can only make America great again if we ReBuildUSAtoday! I'm donating to ReBuildUSAtoday! What about you? https://laurel-smith.github.io/DonateToReBuildUSAtoday" target="_blank" class="btn share-btn email">
+            <i class="fa fa-envelope"></i>
+        </a>
+</p>
+<p style="border:3px; border-style:solid; border-color:#FF0000; padding: 1em;">This site, "Put me in CHARGE! And watch me ReBuildUSAtoday!" was paid for by ReBuildUSAtodayHPAC 2017. Copyright: La Alianza De Peregrinos de los Estados Unidos 2014.</p>
+
+</div>
+
+</html>
